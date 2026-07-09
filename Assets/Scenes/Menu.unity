@@ -1341,6 +1341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80451c8cbae74444d86d6f5c4d1c39ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
+  greyImage: {fileID: 6695485714800336316, guid: 153ad499c8112b44c88f347ec0b12c2e, type: 3}
+  imageOG: {fileID: -5850036365806385723, guid: 90ad22ac2b15bab4d9b6044948dfc6f3, type: 3}
 --- !u!4 &1388358488
 Transform:
   m_ObjectHideFlags: 0
