@@ -52,19 +52,19 @@
         "id": 7,
         "ingredients": [3, 1],
         "resultName": "Reacción explosiva",
-        "type": "Explosion"
+        "type": "Danger"
     },
     {
         "id": 8,
         "ingredients": [0, 0],
         "resultName": "Gas muy inflamable",
-        "type": "Hazard"
+        "type": "Danger"
     },
     {
         "id": 9,
         "ingredients": [8, 1],
         "resultName": "Gas tóxico",
-        "type": "Hazard"
+        "type": "Danger"
     }
   ]
 }
