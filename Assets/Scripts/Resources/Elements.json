@@ -1,0 +1,55 @@
+{
+  "elements":[
+    {
+        "id": 0,
+        "symbol": "H",
+        "name": "Hidrógeno"
+    },
+    {
+        "id": 1,
+        "symbol": "O",
+        "name": "Oxígeno"
+    },
+    {
+        "id": 2,
+        "symbol": "C",
+        "name": "Carbono"
+    },
+    {
+        "id": 3,
+        "symbol": "Na",
+        "name": "Sodio"
+    },
+    {
+        "id": 4,
+        "symbol": "Cl",
+        "name": "Cloro"
+    },
+    {
+        "id": 5,
+        "symbol": "Fe",
+        "name": "Hierro"
+    },
+    {
+        "id": 6,
+        "symbol": "Cu",
+        "name": "Cobre"
+    },
+    {
+        "id": 7,
+        "symbol": "Si",
+        "name": "Silicio"
+    },
+    {
+        "id": 8,
+        "symbol": "S",
+        "name": "Azufre"
+    },
+    {
+        "id": 9,
+        "symbol": "Au",
+        "name": "Oro"
+    }
+  ]
+}
+

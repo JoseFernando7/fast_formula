@@ -1,0 +1,71 @@
+{
+  "reactions":
+  [
+    {
+        "id": -1,
+        "resultName": "Mezcla fallida",
+        "type": "Fail"
+    },
+    {
+        "id": 0,
+        "ingredients": [0, 1],
+        "resultName": "Agua",
+        "type": "Success"
+    },
+    {
+        "id": 1,
+        "ingredients": [3, 4],
+        "resultName": "Sal",
+        "type": "Success"
+    },
+    {
+        "id": 2,
+        "ingredients": [5, 1],
+        "resultName": "Óxido",
+        "type": "Success"
+    },
+    {
+        "id": 3,
+        "ingredients": [6, 1],
+        "resultName": "Óxido de cobre",
+        "type": "Success"
+    },
+    {
+        "id": 4,
+        "ingredients": [2, 2],
+        "resultName": "Diamante",
+        "type": "Success"
+    },
+    {
+        "id": 5,
+        "ingredients": [7, 1],
+        "resultName": "Vidrio",
+        "type": "Success"
+    },
+    {
+        "id": 6,
+        "ingredients": [9, 9],
+        "resultName": "Lingote de oro",
+        "type": "Success"
+    },
+    {
+        "id": 7,
+        "ingredients": [3, 1],
+        "resultName": "Reacción explosiva",
+        "type": "Explosion"
+    },
+    {
+        "id": 8,
+        "ingredients": [0, 0],
+        "resultName": "Gas muy inflamable",
+        "type": "Hazard"
+    },
+    {
+        "id": 9,
+        "ingredients": [8, 1],
+        "resultName": "Gas tóxico",
+        "type": "Hazard"
+    }
+  ]
+}
+
