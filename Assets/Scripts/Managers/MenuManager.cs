@@ -4,22 +4,6 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    public Sprite greyImage;
-
-    public Sprite imageOG;
-
-    private void Start()
-    {
-        if(greyImage == null)
-        {
-            greyImage = null;
-        }
-
-        if (imageOG == null)
-        {
-            imageOG = null;
-        }
-    }
 
     public void StartGame()
     {
@@ -42,23 +26,23 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Cerrando juego...");
     }
 
-    public void OpenGreyScreen(GameObject panel)
+    public void OpenGreyScreen(GameObject panel,  GameObject imageOG, Image greenImage)
     {
-       
-        if(greyImage != null)
-        {
-            Image image = panel.GetComponent<Image>();
-            image.sprite = greyImage;
-        }
+       Image image = imageOG.GetComponent<Image>();
+
+       image = greenImage;
+
+        panel.gameObject.SetActive(true);
+    
     }
 
-    public void CloseGreyScreen(GameObject panel)
+    public void CloseGreyScreen(GameObject panel, GameObject imageOG, Image imageToChange)
     {
-        if (greyImage != null)
-        {
-            Image image = panel.GetComponent<Image>();
-            image.sprite = imageOG;
-        }
+        Image image = imageOG.GetComponent<Image>();
+
+        image = imageToChange;
+
+        panel.gameObject.SetActive(false);
 
     }
 }
