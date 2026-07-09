@@ -31,14 +31,31 @@ public class Cauldron : MonoBehaviour
     public ReactionResultEvent OnMixResult;   // se dispara con el resultado (ReactionData) apenas se completa la mezcla
     public UnityEngine.Events.UnityEvent OnCauldronCleared; // se dispara cuando el recipiente vuelve a estar vacío
 
+    [Header("Visual del recipiente")]
+    [Tooltip("Si se deja vacío, se busca automáticamente en este mismo GameObject.")]
+    public SpriteRenderer cauldronRenderer;
+    [Tooltip("Sprite cuando ya se agregaron los 2 elementos (ej: vaso lleno / burbujeando).")]
+    public Sprite fullSprite;
+    [Tooltip("Sprite al que vuelve cuando se vacía. Si se deja vacío, se usa el sprite inicial del recipiente.")]
+    public Sprite emptySprite;
+
     private readonly List<int> storedElementIds = new List<int>();
     private readonly List<DraggableElement> storedElements = new List<DraggableElement>();
     private bool isProcessing;
+    private Collider2D col;
 
     void Awake()
     {
         if (reactionManager == null)
             reactionManager = FindObjectOfType<ReactionManager>();
+
+        if (cauldronRenderer == null)
+            cauldronRenderer = GetComponent<SpriteRenderer>();
+
+        if (emptySprite == null && cauldronRenderer != null)
+            emptySprite = cauldronRenderer.sprite;
+
+        col = GetComponent<Collider2D>();
     }
 
     public bool CanAcceptElement()
@@ -67,6 +84,9 @@ public class Cauldron : MonoBehaviour
 
         if (storedElementIds.Count >= maxElements)
         {
+            if (cauldronRenderer != null && fullSprite != null)
+                cauldronRenderer.sprite = fullSprite;
+
             StartCoroutine(ProcessMix());
         }
     }
@@ -141,6 +161,9 @@ public class Cauldron : MonoBehaviour
         storedElementIds.Clear();
         isProcessing = false;
 
+        if (cauldronRenderer != null && emptySprite != null)
+            cauldronRenderer.sprite = emptySprite;
+
         OnCauldronCleared?.Invoke();
     }
 
@@ -153,6 +176,30 @@ public class Cauldron : MonoBehaviour
         foreach (var slot in slotPositions)
         {
             if (slot != null) Gizmos.DrawWireSphere(slot.position, 0.15f);
+        }
+    }
+
+    /// <summary>
+    /// Oculta o muestra el Perol (apaga también su collider, para que
+    /// mientras esté oculto no se pueda soltar nada encima).
+    /// </summary>
+    public void SetVisible(bool visible)
+    {
+        if (cauldronRenderer != null) cauldronRenderer.enabled = visible;
+        if (col != null) col.enabled = visible;
+    }
+
+    /// <summary>
+    /// Oculta o muestra TODOS los Peroles que haya en la escena (normalmente
+    /// solo hay uno). Llamar con false al mostrar Perdiste o abrir un panel,
+    /// y con true al cerrarlo / reiniciar.
+    /// </summary>
+    public static void SetAllVisible(bool visible)
+    {
+        Cauldron[] all = FindObjectsOfType<Cauldron>();
+        foreach (Cauldron cauldron in all)
+        {
+            cauldron.SetVisible(visible);
         }
     }
 }

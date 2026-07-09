@@ -29,11 +29,26 @@ public class MenuManager : MonoBehaviour
     public void OpenPanel(GameObject panel)
     {
         panel.SetActive(true);
+
+        // Oculta los elementos sueltos (química), el estante y el Perol para
+        // que no se sobrepongan con el panel que se acaba de abrir (Lista, Pedido, etc.).
+        DraggableElement.SetAllVisible(false);
+        ElementSpawner.SetAllVisible(false);
+        Cauldron.SetAllVisible(false);
     }
 
     public void ClosePanel(GameObject panel)
     {
         panel.SetActive(false);
+
+        // Vuelve a mostrarlos apenas se cierra el panel, salvo que el juego
+        // ya se haya terminado (no tendría sentido que reaparezcan).
+        if (!ReactionLogger.IsGameOver)
+        {
+            DraggableElement.SetAllVisible(true);
+            ElementSpawner.SetAllVisible(true);
+            Cauldron.SetAllVisible(true);
+        }
     }
 
     public void Exit()

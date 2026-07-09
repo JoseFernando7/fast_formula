@@ -17,24 +17,32 @@ public class DraggableElement : MonoBehaviour
     [Header("Configuración de arrastre")]
     public float returnSpeed = 12f;
 
+    [Tooltip("Referencia al ElementSpawner que lo creó. Se usa para avisarle que ya puede generar otra copia en cuanto este elemento sale del estante.")]
+    public ElementSpawner sourceSpawner;
+
     private Vector3 startPosition;
     private Vector3 dragOffset;
     private bool isDragging;
     private bool isReturning;
     private Camera cam;
     private SpriteRenderer sr;
+    private Collider2D col;
     private int originalSortingOrder;
 
     void Awake()
     {
         cam = Camera.main;
         sr = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();
         originalSortingOrder = sr.sortingOrder;
         startPosition = transform.position;
     }
 
     void OnMouseDown()
     {
+        // No permitir seguir jugando una vez que salió la pantalla de Perdiste.
+        if (ReactionLogger.IsGameOver) return;
+
         // Fallback por si el elemento se instancia antes de que la cámara
         // principal esté lista, o si cambia de cámara en runtime.
         if (cam == null) cam = Camera.main;
@@ -48,6 +56,13 @@ public class DraggableElement : MonoBehaviour
         isReturning = false;
         dragOffset = transform.position - GetMouseWorldPosition();
         sr.sortingOrder = 100; // se dibuja encima de todo mientras se arrastra
+
+        // Apenas el elemento se levanta del estante, avisamos al spawner para
+        // que ya pueda generar otra copia (incluso del mismo elemento).
+        if (sourceSpawner != null)
+        {
+            sourceSpawner.NotifyPickedUp(gameObject);
+        }
     }
 
     void OnMouseDrag()
@@ -120,5 +135,30 @@ public class DraggableElement : MonoBehaviour
         Vector3 mouseScreen = Input.mousePosition;
         mouseScreen.z = -cam.transform.position.z;
         return cam.ScreenToWorldPoint(mouseScreen);
+    }
+
+    /// <summary>
+    /// Oculta o muestra este elemento sin destruirlo (apaga también su
+    /// Collider2D para que mientras esté oculto no se pueda ni clickear ni
+    /// arrastrar, así no interfiere con paneles abiertos encima).
+    /// </summary>
+    public void SetVisible(bool visible)
+    {
+        if (sr != null) sr.enabled = visible;
+        if (col != null) col.enabled = visible;
+    }
+
+    /// <summary>
+    /// Oculta o muestra TODOS los elementos que estén sueltos en la escena
+    /// en este momento. Llamar con false al abrir un panel (Lista, Pedido,
+    /// etc.) y con true al cerrarlo, para que nunca se sobrepongan.
+    /// </summary>
+    public static void SetAllVisible(bool visible)
+    {
+        DraggableElement[] all = FindObjectsOfType<DraggableElement>();
+        foreach (DraggableElement element in all)
+        {
+            element.SetVisible(visible);
+        }
     }
 }
