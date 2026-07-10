@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        if(greyImage == null)
+        if (greyImage == null)
         {
             greyImage = null;
         }
@@ -59,8 +59,8 @@ public class MenuManager : MonoBehaviour
 
     public void OpenGreyScreen(GameObject panel)
     {
-       
-        if(greyImage != null)
+
+        if (greyImage != null)
         {
             Image image = panel.GetComponent<Image>();
             image.sprite = greyImage;
@@ -75,5 +75,30 @@ public class MenuManager : MonoBehaviour
             image.sprite = imageOG;
         }
 
+    }
+
+    public void OpenOrderPanel(GameObject panel)
+    {
+        panel.SetActive(true);
+
+        // Oculta los elementos sueltos (química), el estante y el Perol para
+        // que no se sobrepongan con el panel que se acaba de abrir (Lista, Pedido, etc.).
+        DraggableElement.SetAllVisible(false);
+        ElementSpawner.SetAllVisible(false);
+        Cauldron.SetAllVisible(false);
+    }
+
+    public void CloseOrderPanel(GameObject panel)
+    {
+        panel.SetActive(false);
+
+        // Vuelve a mostrarlos apenas se cierra el panel, salvo que el juego
+        // ya se haya terminado (no tendría sentido que reaparezcan).
+        if (!ReactionLogger.IsGameOver)
+        {
+            DraggableElement.SetAllVisible(true);
+            ElementSpawner.SetAllVisible(true);
+            Cauldron.SetAllVisible(true);
+        }
     }
 }
